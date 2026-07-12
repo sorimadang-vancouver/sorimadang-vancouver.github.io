@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소리마당 밴쿠버 | Sorimadang Vancouver</title>
+    <meta name="description" content="Learn and share the beauty of Korean traditional Pansori in Vancouver. Everyone is welcome—from children to adults.">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300..900&family=Noto+Sans+KR:wght@300;400;500;700&family=Song+Myung&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* CSS Variables */
+        :root {
+            /* Dark Mode (Default) */
+            --ink: #1B1714;
+            --ink-raised: #221C17;
+            --paper: #EDE6D6;
+            --paper-dim: #A99C87;
+            --vermilion: #C13B23;
+            --vermilion-deep: #8E2B19;
+            --vermilion-text: #E0704F;
+            --brass: #A8874F;
+            --border-color: rgba(237,230,214,0.14);
+            
+            --bg-color: var(--ink);
+            --surface-color: var(--ink-raised);
+            --text-main: var(--paper);
+            --text-muted: var(--paper-dim);
+            --accent-text: var(--vermilion-text);
+            --accent-brass: var(--brass);
+            --divider: var(--border-color);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #F2ECDF;
+            --text-main: #2A211A;
+            --text-muted: #6B5D4C;
+            --surface-color: #E9E0CE;
+            --accent-text: #A8341F;
+            --accent-brass: #8A6D35;
+            --divider: rgba(42, 33, 26, 0.15);
+            --vermilion: #C13B23; /* fallback for bg */
+        }
+
+        /* Reset & Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            word-break: keep-all;
+            overflow-wrap: break-word;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        /* Subtle paper texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            z-index: 999;
+        }
+
+        /* Soft radial glow for Hero */
+        .hero-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 80vh;
+            background: radial-gradient(circle at top, rgba(168, 135, 79, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+            will-change: transform;
+        }
+        
+        [data-theme="light"] .hero-glow {
+            background: radial-gradient(circle at top, rgba(138, 109, 53, 0.08) 0%, transparent 60%);
+        }
+
+        h1, .font-display {
+            font-family: 'Song Myung', serif;
+            font-weight: 400;
+        }
+        
+        h2, h3 {
+            font-family: 'Song Myung', serif;
+            font-weight: 500;
+        }
+
+        .font-accent {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+        }
+        
+        strong {
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        /* Typography utils */
+        .text-accent { color: var(--accent-text); }
+        .text-brass { color: var(--accent-brass); }
+        .text-muted { color: var(--text-muted); }
+
+        /* Layout */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        section:not(:last-of-type)::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1px;
+            width: 100%;
+            background-color: var(--divider);
+        }
+
+        section:last-of-type {
+            /* No border for the last section */
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .icon-btn {
+            background: var(--surface-color);
+            border: 1px solid var(--divider);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:hover, .icon-btn:focus-visible {
+            border-color: var(--accent-brass);
+            outline: none;
+        }
+
+        .icon-btn:focus-visible {
+            box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px var(--accent-brass);
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding-top: 10rem;
+        }
+
+        .profile-frame {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 2.5rem;
+            border-radius: 50%;
+            border: 1px solid var(--accent-brass);
+            padding: 4px;
+            position: relative;
+            transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s ease;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--accent-brass);
+            border-radius: 20px;
+            color: var(--accent-brass);
+            margin-bottom: 2rem;
+        }
+
+        .lead {
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            color: var(--text-muted);
+            white-space: pre-line;
+        }
+
+        /* CTA & Signature Interaction */
+        .cta-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--vermilion);
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.125rem;
+            transition: background-color 0.25s ease, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s ease;
+        }
+        
+        [data-theme="light"] .cta {
+            background-color: var(--accent-text);
+        }
+
+        .cta:hover, .cta:focus-visible {
+            background-color: var(--vermilion-deep);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            outline: none;
+        }
+        
+        [data-theme="light"] .cta:hover, [data-theme="light"] .cta:focus-visible {
+            background-color: var(--vermilion);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+
+        .cta:focus-visible {
+            box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px var(--vermilion), 0 6px 16px rgba(0,0,0,0.15);
+        }
+
+        .chuimsae {
+            position: absolute;
+            font-family: 'Song Myung', serif;
+            font-size: 1.25rem;
+            color: var(--accent-brass);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+            /* Desktop default */
+            right: -70px;
+            transform: translateX(-5px) rotate(-3deg);
+        }
+
+        .cta:hover + .chuimsae,
+        .cta:focus-visible + .chuimsae {
+            opacity: 1;
+            transform: translateX(0) rotate(5deg);
+        }
+
+        @media (max-width: 600px) {
+            .chuimsae {
+                right: auto;
+                bottom: -35px;
+                transform: translateY(-5px) rotate(-3deg);
+            }
+            .cta:hover + .chuimsae,
+            .cta:focus-visible + .chuimsae {
+                transform: translateY(0) rotate(5deg);
+            }
+        }
+
+        /* Typography elements */
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent-brass);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Cards Layout */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 600px) {
+            .cards-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: var(--surface-color);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--divider);
+            transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(237, 230, 214, 0.2);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        [data-theme="light"] .card:hover {
+            border-color: rgba(42, 33, 26, 0.2);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--accent-text);
+        }
+
+        .card ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .card ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-brass);
+        }
+
+        /* Timeline */
+        .timeline {
+            margin-top: 3rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--divider);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.1rem;
+            top: 0.5rem;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--accent-brass);
+            border: 2px solid var(--bg-color);
+        }
+
+        .timeline-item h4 {
+            font-size: 1.125rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item .note {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 1rem;
+        }
+        
+        .timeline-item ul {
+            margin-top: 0.5rem;
+        }
+        
+        .timeline-item ul li {
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        /* Feature Cards (What Will You Learn) */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        @media (min-width: 600px) {
+            .feature-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .feature-item {
+            background: transparent;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            background: var(--surface-color);
+            border-color: rgba(237, 230, 214, 0.1);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        
+        [data-theme="light"] .feature-item:hover {
+            border-color: rgba(42, 33, 26, 0.1);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+        }
+
+        .feature-item h3 {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 500;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+        
+        .feature-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* Contact Details */
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-icon {
+            color: var(--accent-brass);
+            transition: transform 0.2s ease;
+        }
+
+        .contact-item:hover, .contact-item:focus {
+            color: var(--accent-brass);
+            outline: none;
+        }
+
+        .contact-item:focus-visible {
+            outline: 2px solid var(--accent-brass);
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        .contact-item:hover .contact-icon, .contact-item:focus .contact-icon {
+            transform: translateX(2px);
+        }
+        
+        .small-note {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0 6rem;
+            text-align: center;
+        }
+
+        footer h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        footer .quote {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        footer .copyright {
+            font-size: 0.875rem;
+            color: var(--divider);
+        }
+
+        /* Scroll to Top */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--surface-color);
+            border: 1px solid var(--divider);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover, .scroll-to-top:focus-visible {
+            background: var(--accent-brass);
+            color: #fff;
+            border-color: var(--accent-brass);
+            outline: none;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        /* Bilingual setup */
+        [lang="en"] .ko { display: none; }
+        [lang="ko"] .en { display: none; }
+
+        /* Future Media & Gallery Components */
+        .hidden-for-now {
+            display: none !important;
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        @media (min-width: 600px) {
+            .media-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        .media-card {
+            background: var(--surface-color);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--divider);
+            transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s ease;
+        }
+        .media-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(237, 230, 214, 0.2);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        
+        [data-theme="light"] .media-card:hover {
+            border-color: rgba(51, 51, 51, 0.2);
+        }
+        
+        .aspect-ratio-box {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background: var(--bg-color);
+        }
+        .aspect-ratio-box.square {
+            padding-top: 100%;
+        }
+        .aspect-ratio-box iframe,
+        .aspect-ratio-box video,
+        .aspect-ratio-box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+        }
+        
+        .media-card-content {
+            padding: 1.5rem;
+        }
+        .media-card-title {
+            font-size: 1.125rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+        .media-card-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+        
+        .testimonial-card {
+            background: var(--surface-color);
+            padding: 2.5rem 2rem 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--divider);
+            position: relative;
+            transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(237, 230, 214, 0.2);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        [data-theme="light"] .testimonial-card:hover {
+            border-color: rgba(51, 51, 51, 0.2);
+        }
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            font-size: 4rem;
+            font-family: 'Song Myung', serif;
+            color: var(--divider);
+            opacity: 0.5;
+            line-height: 1;
+            pointer-events: none;
+        }
+        .testimonial-text {
+            position: relative;
+            z-index: 1;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        .testimonial-author {
+            font-size: 0.95rem;
+            color: var(--accent-brass);
+            font-family: 'Fraunces', serif;
+        }
+
+        /* Animation System */
+        @media (prefers-reduced-motion: no-preference) {
+            .hero-glow {
+                animation: heroBreathe 14s infinite ease-in-out;
+            }
+            @keyframes heroBreathe {
+                0%, 100% { transform: translateX(-50%) scale(1) translateY(0); }
+                50% { transform: translateX(-50%) scale(1.05) translateY(10px); }
+            }
+
+            .reveal-item {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+            
+            .reveal-item.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Title Blur Reveal */
+            h1.reveal-item {
+                filter: blur(6px);
+                transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+                            transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+                            filter 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+            h1.reveal-item.visible {
+                filter: blur(0);
+            }
+
+            .profile-frame.reveal-item {
+                transform: translateY(10px) scale(0.94);
+            }
+            .profile-frame.reveal-item.visible {
+                transform: translateY(0) scale(1);
+            }
+            .profile-frame.reveal-item.visible:hover {
+                transform: translateY(-3px) scale(1);
+            }
+
+            /* Timeline animation */
+            .timeline::before {
+                transform: scaleY(0);
+                transform-origin: top;
+                transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+            .timeline.visible::before {
+                transform: scaleY(1);
+            }
+            
+            .timeline-item::before {
+                opacity: 0;
+                transform: scale(0.5);
+                transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+            .timeline-item.visible::before {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            /* Section Divider */
+            section:not(:last-of-type)::after {
+                width: 0;
+                transition: width 1s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+            section.visible:not(:last-of-type)::after {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-glow"></div>
+
+    <div class="controls">
+        <button class="icon-btn" id="langToggle" aria-label="Toggle language">
+            <span class="ko">EN</span>
+            <span class="en">KR</span>
+        </button>
+        <button class="icon-btn" id="themeToggle" aria-label="Toggle dark/light mode" aria-pressed="true">
+            <i data-lucide="moon" class="moon-icon" style="display: none;"></i>
+            <i data-lucide="sun" class="sun-icon"></i>
+        </button>
+    </div>
+
+    <main>
+        <!-- 1. Hero -->
+        <section class="hero container reveal-section">
+            <div class="profile-frame reveal-item">
+                <img src="images/profile.jpg" alt="Kim Song Profile" class="profile-img">
+            </div>
+            <p class="font-accent reveal-item" style="margin-bottom: 1rem; color: var(--accent-brass);">Kim Song</p>
+            <h1 class="ko reveal-item">소리마당 밴쿠버</h1>
+            <h1 class="en reveal-item">Sori Madang Vancouver</h1>
+            <p class="subtitle font-accent reveal-item ko">한국 전통 음악 & 판소리 클래스</p>
+            <p class="subtitle font-accent reveal-item en">Korean Traditional Music & Pansori Classes</p>
+            
+            <div class="reveal-item">
+                <div class="badge ko">
+                    밴쿠버 · 무료 첫 수업
+                </div>
+                <div class="badge en">
+                    VANCOUVER · First Class Free
+                </div>
+            </div>
+            
+            <p class="lead ko reveal-item"><strong style="font-size: 1.2rem;">목소리 하나로 이야기를 전하는 예술.</strong><br><br>판소리는 한국의 전통 음악으로, 노래와 이야기, 감정을 함께 표현하는 독특한 공연 예술입니다.<br><br>음악을 처음 배우는 분도, 한국 문화에 관심 있는 분도 모두 환영합니다.</p>
+            <p class="lead en reveal-item"><strong style="font-size: 1.2rem;">An art form that tells stories through a single voice.</strong><br><br>Pansori is a traditional Korean performing art that combines singing, storytelling, and emotional expression into one unique musical experience.<br><br>Whether you are completely new to music or simply interested in Korean culture, everyone is welcome.</p>
+            
+            <div class="cta-wrap reveal-item">
+                <a href="#contact" class="cta">
+                    <span class="ko">문의하기</span>
+                    <span class="en">Contact</span>
+                </a>
+                <span class="chuimsae">얼씨구!</span>
+            </div>
+        </section>
+
+        <!-- 2. What is Pansori? -->
+        <section class="container reveal-section">
+            <h2 class="ko reveal-item">판소리란?</h2>
+            <h2 class="en reveal-item">What is Pansori?</h2>
+            
+            <p class="text-muted ko reveal-item">
+                판소리는 <strong>한 명의 소리꾼과 한 명의 고수</strong>가 함께 만들어가는 한국의 전통 공연 예술입니다.<br><br>
+                소리(노래), 아니리(말), 발림(몸짓)이 어우러져 하나의 긴 이야기를 들려주며,<br>북장단과 관객의 추임새가 더해져 매 공연마다 살아있는 무대가 완성됩니다.<br><br>
+                2003년, 판소리는 <strong>유네스코 인류무형문화유산</strong>으로 등재되어 세계적으로 그 가치를 인정받았습니다.
+            </p>
+            <p class="text-muted en reveal-item">
+                Pansori is a traditional Korean performing art created through the collaboration of <strong>one singer (sorikkun) and one drummer (gosu)</strong>.<br><br>
+                It combines singing, spoken narration, expressive gestures, rhythmic drumming, and audience participation to tell a complete story in a uniquely immersive way.<br><br>
+                Recognized by UNESCO as an <strong>Intangible Cultural Heritage of Humanity</strong> in 2003, Pansori is celebrated worldwide as one of Korea's most treasured performing arts.
+            </p>
+
+            <h3 class="font-display ko reveal-item" style="margin: 2rem 0 1rem; font-size: 1.5rem;">판소리의 매력</h3>
+            <h3 class="font-display en reveal-item" style="margin: 2rem 0 1rem; font-size: 1.5rem;">Why Pansori is Special</h3>
+            
+            <ul class="reveal-item" style="color: var(--text-muted); padding-left: 1.5rem; list-style-type: circle;">
+                <li class="ko">노래와 이야기가 하나가 되는 예술</li><li class="en">A unique blend of music and storytelling</li>
+                <li class="ko">다양한 장단이 만들어내는 풍부한 리듬</li><li class="en">Rich rhythmic patterns that shape each performance</li>
+                <li class="ko">몸짓과 표정으로 전하는 생생한 표현</li><li class="en">Expressive movement and emotional delivery</li>
+                <li class="ko">관객과 함께 완성되는 공연</li><li class="en">A performance completed together with the audience</li>
+            </ul>
+        </section>
+
+        <!-- 3. About the Instructor -->
+        <section class="container reveal-section">
+            <h2 class="ko reveal-item">강사 소개</h2>
+            <h2 class="en reveal-item">About the Instructor</h2>
+            
+            <p class="text-muted ko reveal-item">
+                김송 강사는 <strong>초등학교 시절부터 판소리를 배우기 시작해</strong> 현재까지 꾸준히 전통 소리를 이어오며,<br>한국 전통 소리의 깊이와 매력을 익혀왔습니다.<br><br>
+                한국에서는 초등학생들에게 판소리를 지도하며, 아이들이 우리 전통문화를 자연스럽게 배우고 즐길 수 있도록 함께했습니다. 그 시간을 통해 판소리는 단순히 배우는 예술을 넘어, <strong>사람과 사람을 연결하고 마음을 나누는 소중한 문화</strong>임을 느끼게 되었습니다.<br><br>
+                이제 그 경험을 바탕으로 <strong>밴쿠버에서도 더 많은 분들과 판소리의 아름다움과 즐거움을 함께 나누고자</strong> 합니다. 어린이부터 성인까지, 처음 시작하는 분들도 편안하게 판소리를 접하고 배울 수 있는 수업을 만들어가겠습니다.
+            </p>
+            <p class="text-muted en reveal-item">
+                Kim Song has <strong>studied Pansori since elementary school</strong> and has continued practicing traditional Korean vocal arts ever since, developing a deep appreciation for its artistry and cultural significance.<br><br>
+                In Korea, she taught Pansori to elementary school students, helping children discover and enjoy Korean traditional culture through music. Through that experience, she came to believe that Pansori is more than a performing art—it is a <strong>meaningful way to connect people and share stories</strong> across generations.<br><br>
+                Now in Vancouver, she hopes to <strong>share the beauty and joy of Pansori with more people</strong>, creating a welcoming environment where both children and adults can comfortably begin their journey into Korean traditional music.
+            </p>
+
+            <div class="cards-grid">
+                <div class="card reveal-item">
+                    <h3 class="ko">학력</h3>
+                    <h3 class="en">Education</h3>
+                    <ul>
+                        <li class="ko">국립전통예술고등학교 졸업</li>
+                        <li class="en">Graduated from National Traditional Arts High School</li>
+                        <li class="ko">전북대학교 한국음악과 석사과정</li>
+                        <li class="en">Master's Program, Department of Korean Traditional Music, Jeonbuk National University</li>
+                    </ul>
+                </div>
+                
+                <div class="card reveal-item">
+                    <h3 class="ko">수상 경력</h3>
+                    <h3 class="en">Awards</h3>
+                    <ul>
+                        <li class="ko">금상 — 창원야철전국국악경연대회</li>
+                        <li class="en">Gold Prize — Changwon Yacheol National Gugak Competition</li>
+                        <li class="ko">대상 — 진도전국국악경연대회</li>
+                        <li class="en">Grand Prize — Jindo National Traditional Music Competition</li>
+                        <li class="ko">대상 — 제5회 낙안읍성 전국국악경연대회 (학생부)</li>
+                        <li class="en">Grand Prize — 5th Naganeupseong National Gugak Competition (Student Division)</li>
+                    </ul>
+                </div>
+
+                <div class="card reveal-item">
+                    <h3 class="ko">주요 활동</h3>
+                    <h3 class="en">Major Activities</h3>
+                    <ul>
+                        <li class="ko">흥보가 완창 발표회</li>
+                        <li class="en">Complete performance of Heungboga</li>
+                        <li class="ko">대전 판소리 고법 흥보가 발표회 초청 명창</li>
+                        <li class="en">Invited Master Singer at Daejeon Pansori Gobeop Heungboga Concert</li>
+                        <li class="ko">합천 대평 군물 농악 (MC 및 소리)</li>
+                        <li class="en">Hapcheon Daepyeong Gunmul Nongak (MC & Singer)</li>
+                        <li class="ko">2024 IPEA Percussion Elite Performance</li>
+                        <li class="en">2024 IPEA Percussion Elite Performance</li>
+                    </ul>
+                </div>
+
+                <div class="card reveal-item">
+                    <h3 class="ko">자격증</h3>
+                    <h3 class="en">Certification</h3>
+                    <ul>
+                        <li class="ko">국악교육사 자격증</li>
+                        <li class="en">Certified Korean Traditional Music Educator</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. What Will You Learn? -->
+        <section class="container reveal-section">
+            <h2 class="ko reveal-item">무엇을 배우나요?</h2>
+            <h2 class="en reveal-item">What Will You Learn?</h2>
+            
+            <div class="cards-grid">
+                <div class="card reveal-item">
+                    <h3 class="ko">소리</h3>
+                    <h3 class="en">Pansori Singing</h3>
+                    <p class="ko text-muted" style="margin-bottom: 0;">판소리의 기본 발성, 호흡, 소리 표현 방법을 배웁니다.</p>
+                    <p class="en text-muted" style="margin-bottom: 0;">Learn the foundations of Pansori singing, including vocal technique, breathing, and expressive voice production.</p>
+                </div>
+                <div class="card reveal-item">
+                    <h3 class="ko">장단</h3>
+                    <h3 class="en">Traditional Rhythm</h3>
+                    <p class="ko text-muted" style="margin-bottom: 0;">전통 리듬 구조를 이해하고, 장단에 맞춰 소리하는 법을 익힙니다.</p>
+                    <p class="en text-muted" style="margin-bottom: 0;">Understand traditional Korean rhythmic patterns and learn how to sing naturally within them.</p>
+                </div>
+                <div class="card reveal-item">
+                    <h3 class="ko">창과 아니리</h3>
+                    <h3 class="en">Storytelling & Expression</h3>
+                    <p class="ko text-muted" style="margin-bottom: 0;">노래와 말로 이야기를 전달하는 판소리의 표현 방식을 배웁니다.</p>
+                    <p class="en text-muted" style="margin-bottom: 0;">Learn how Pansori blends singing and spoken narration to tell engaging stories.</p>
+                </div>
+                <div class="card reveal-item">
+                    <h3 class="ko">추임새</h3>
+                    <h3 class="en">Audience Interaction</h3>
+                    <p class="ko text-muted" style="margin-bottom: 0;">관객과 함께 만들어가는 판소리만의 소통 방식을 경험합니다.</p>
+                    <p class="en text-muted" style="margin-bottom: 0;">Experience Chuimsae—the unique audience responses that make every Pansori performance a shared experience.</p>
+                </div>
+            </div>
+
+            <h3 class="font-display ko reveal-item" style="font-size: 1.5rem; margin-top: 3rem;">학습 과정</h3>
+            <h3 class="font-display en reveal-item" style="font-size: 1.5rem; margin-top: 3rem;">Learning Journey</h3>
+            
+            <p class="text-muted ko reveal-item" style="margin-top: 1rem;">판소리의 기본이 되는 소리와 호흡을 익히기 위해 먼저 한국 민요를 배우고, 이후 판소리의 대표적인 대목을 통해 이야기와 표현을 확장해 나갑니다.</p>
+            <p class="text-muted en reveal-item" style="margin-top: 1rem;">Students begin with traditional Korean folk songs to build vocal technique, breathing, rhythm, and musical expression before progressing to iconic scenes from Pansori.</p>
+
+            <div class="timeline reveal-item">
+                <div class="timeline-item">
+                    <h4 class="ko reveal-timeline-content">한국 민요 배우기</h4>
+                    <h4 class="en reveal-timeline-content">Traditional Korean Folk Songs</h4>
+                    <ul class="reveal-timeline-content">
+                        <li><span class="ko">너영나영</span><span class="en">Neoyeong Nayeong</span></li>
+                        <li><span class="ko">진도 아리랑</span><span class="en">Jindo Arirang</span></li>
+                        <li><span class="ko">동백 타령</span><span class="en">Dongbaek Taryeong</span></li>
+                        <li><span class="ko">동해 바다</span><span class="en">Donghae Bada</span></li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="ko reveal-timeline-content">판소리 대목 배우기</h4>
+                    <h4 class="en reveal-timeline-content">Pansori Arias & Scenes</h4>
+                    <ul class="reveal-timeline-content">
+                        <li><span class="ko">춘향가 – 사랑가</span><span class="en">Chunhyangga – Sarangga (Love Song)</span></li>
+                        <li><span class="ko">흥보가 – 돈타령</span><span class="en">Heungboga – Dontaryeong (Song of Money)</span></li>
+                        <li><span class="ko">심청가 – 아버지 듣조시오</span><span class="en">Simcheongga – Abeoji Deutjosio (Please Listen, Father)</span></li>
+                        <li><span class="ko">수궁가 – 토끼 화상 그리는 대목</span><span class="en">Sugungga – Tokki Hwasang Geurineun Daemok (Drawing the Rabbit's Portrait)</span></li>
+                    </ul>
+                    <p class="note ko reveal-timeline-content">* 학습 곡과 진행 속도는 학생의 경험, 관심 분야, 목표에 따라 맞춤 조정됩니다.</p>
+                    <p class="note en reveal-timeline-content">* Lessons are tailored to each student's experience, interests, and personal learning goals.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Currently Free -->
+        <section class="container reveal-section" style="text-align: center;">
+            <div class="reveal-item">
+                <i data-lucide="gift" style="width: 48px; height: 48px; color: var(--accent-brass); margin-bottom: 1.5rem;"></i>
+            </div>
+            <h2 class="ko reveal-item" style="margin-bottom: 1rem;">오픈 이벤트</h2>
+            <h2 class="en reveal-item" style="margin-bottom: 1rem;">Opening Event</h2>
+            <p class="lead ko reveal-item">밴쿠버에서 판소리 클래스를 새롭게 시작하며, 첫 만남을 기념하여 무료 체험 수업을 진행합니다.<br><br>총 <strong class="text-accent">10명 한정</strong>으로 진행되며, 각 수강생에게 맞춘 집중적인 수업을 위해 개인 레슨 형태로 운영됩니다.<br><br>판소리를 처음 접하는 분들도 부담 없이 참여하실 수 있습니다. 소리, 장단, 이야기로 이루어진 한국 전통 판소리의 매력을 직접 경험해보세요.<br><br>참여 인원이 제한되어 있어 사전 예약을 부탁드립니다.</p>
+            <p class="lead en reveal-item">To celebrate the launch of our Pansori classes in Vancouver, we are offering complimentary introductory lessons.<br><br>The event is limited to <strong class="text-accent">10 participants</strong> and will be conducted as personalized one-on-one lessons to provide focused instruction.<br><br>Whether you're completely new to Pansori or simply curious about Korean traditional music, you're warmly invited to experience its beauty through singing, rhythm, and storytelling.<br><br>Advance reservation is required due to limited availability.</p>
+        </section>
+
+        <!-- 6. Schedule & Location -->
+        <section class="container reveal-section">
+            <h2 class="ko reveal-item">일정 및 장소</h2>
+            <h2 class="en reveal-item">Schedule & Location</h2>
+            
+            <div class="cards-grid">
+                <div class="card reveal-item">
+                    <h3 class="ko">대상</h3>
+                    <h3 class="en">Target</h3>
+                    <p class="text-muted ko">어린이부터 성인까지<br>경험 무관</p>
+                    <p class="text-muted en">Children and adults<br>No previous experience required.</p>
+                </div>
+                <div class="card reveal-item">
+                    <h3 class="ko">레슨 형식</h3>
+                    <h3 class="en">Lesson Format</h3>
+                    <p class="text-muted ko">개인 또는 소그룹 레슨 (1:1–1:3)</p>
+                    <p class="text-muted en">Private or small-group lessons (1:1–1:3)</p>
+                </div>
+                <div class="card reveal-item">
+                    <h3 class="ko">일정</h3>
+                    <h3 class="en">Schedule</h3>
+                    <p class="text-muted ko">각 수강생과 개별적으로 조율하여 진행됩니다.</p>
+                    <p class="text-muted en">Arranged individually with each student.</p>
+                </div>
+                <div class="card reveal-item">
+                    <h3 class="ko">장소</h3>
+                    <h3 class="en">Location</h3>
+                    <p class="text-muted ko">밴쿠버 내 위치한 연습실에서 진행됩니다.<br>정확한 위치는 예약 확정 후 안내해 드립니다.</p>
+                    <p class="text-muted en">Lessons are held in a comfortable practice space within Vancouver.<br>The exact location will be provided after reservation confirmation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Section: Experience Pansori -->
+        <!-- [관리자 가이드] 판소리 경험하기 활성화 및 콘텐츠 추가 방법:
+             1. 노출 방법: 아래 <section> 태그의 class="container hidden-for-now" 에서 'hidden-for-now'를 삭제하면 화면에 나타납니다.
+             2. 유튜브 영상 추가: 아래 "Video Placeholder" 텍스트를 지우고 유튜브에서 제공하는 <iframe> 코드를 붙여넣으세요.
+             3. 직접 올리는 MP4 영상: <iframe> 대신 <video src="영상경로.mp4" controls></video> 를 넣으시면 됩니다.
+             4. 아이템 추가: <div class="media-card reveal-item"> ... </div> 전체 블록을 복사해서 바로 아래에 붙여넣으면 자동으로 간격과 레이아웃이 맞춰집니다.
+        -->
+        <section class="container hidden-for-now">
+            <h2 class="ko reveal-item">판소리 경험하기</h2>
+            <h2 class="en reveal-item">Experience Pansori</h2>
+            <p class="text-muted ko reveal-item" style="margin-bottom: 3rem;">다양한 공연과 소리를 미리 감상해보세요.</p>
+            <p class="text-muted en reveal-item" style="margin-bottom: 3rem;">Listen to featured performances and explore the sound before joining.</p>
+            
+            <div class="media-grid">
+                <!-- Placeholder for a YouTube or self-hosted video -->
+                <div class="media-card reveal-item">
+                    <div class="aspect-ratio-box">
+                        <!-- <iframe src="..." title="YouTube video player" allowfullscreen></iframe> -->
+                        <!-- or <video src="..." controls></video> -->
+                        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.9rem;">Video Placeholder</div>
+                    </div>
+                    <div class="media-card-content">
+                        <h3 class="media-card-title ko">춘향가 중 사랑가</h3>
+                        <h3 class="media-card-title en">Sarang-ga from Chunhyang-ga</h3>
+                        <p class="media-card-desc ko">가장 대표적인 사랑 노래입니다.</p>
+                        <p class="media-card-desc en">One of the most famous love songs in Pansori.</p>
+                        <!-- <audio class="audio-player" controls src="..."></audio> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Section: Gallery & Testimonials -->
+        <!-- [관리자 가이드] 갤러리 및 후기 활성화 및 콘텐츠 추가 방법:
+             1. 노출 방법: 아래 <section> 태그의 class="container hidden-for-now" 에서 'hidden-for-now'를 삭제하세요.
+             2. 수강 후기 추가: <div class="testimonial-card reveal-item"> ... </div> 전체 블록을 복사하여 아래에 추가하시면 예쁘게 나열됩니다.
+             3. 갤러리 사진 추가: "Image Placeholder" 부분을 지우고 <img src="이미지경로.jpg" alt="설명"> 을 넣으세요.
+             4. 갤러리 사진은 'square' 클래스 덕분에 원본 비율과 상관없이 자동으로 완벽한 정사각형으로 크롭(Crop)되어 정렬됩니다.
+        -->
+        <section class="container hidden-for-now">
+            <h2 class="ko reveal-item">갤러리 및 후기</h2>
+            <h2 class="en reveal-item">Gallery & Testimonials</h2>
+            <p class="text-muted ko reveal-item">수강생들의 생생한 후기와 수업 스케치</p>
+            <p class="text-muted en reveal-item">Student experiences and class moments.</p>
+
+            <h3 class="font-display ko reveal-item" style="margin: 3rem 0 1rem; font-size: 1.5rem;">수강 후기</h3>
+            <h3 class="font-display en reveal-item" style="margin: 3rem 0 1rem; font-size: 1.5rem;">Student Testimonials</h3>
+            <div class="media-grid" style="margin-bottom: 4rem;">
+                <div class="testimonial-card reveal-item">
+                    <p class="testimonial-text ko">"선생님의 열정적인 가르침 덕분에 판소리의 매력에 푹 빠졌습니다."</p>
+                    <p class="testimonial-text en">"Thanks to the instructor's passionate teaching, I fell in love with Pansori."</p>
+                    <p class="testimonial-author">- Sarah K.</p>
+                </div>
+            </div>
+
+            <h3 class="font-display ko reveal-item" style="margin: 3rem 0 1rem; font-size: 1.5rem;">클래스 풍경</h3>
+            <h3 class="font-display en reveal-item" style="margin: 3rem 0 1rem; font-size: 1.5rem;">Class Gallery</h3>
+            <div class="media-grid">
+                <!-- Placeholder for images -->
+                <div class="media-card reveal-item">
+                    <div class="aspect-ratio-box square">
+                        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.9rem;">Image Placeholder</div>
+                    </div>
+                </div>
+                <div class="media-card reveal-item">
+                    <div class="aspect-ratio-box square">
+                        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.9rem;">Video Placeholder</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Contact -->
+        <section id="contact" class="container">
+            <h2 class="ko reveal-item">문의하기</h2>
+            <h2 class="en reveal-item">Contact</h2>
+            <p class="text-muted ko reveal-item">수업에 관심이 있으시거나 궁금한 점이 있다면 언제든 편하게 연락해 주세요.</p>
+            <p class="text-muted en reveal-item">If you are interested in joining or have any questions, please feel free to reach out.</p>
+
+            <div class="contact-methods reveal-item">
+                <a href="https://www.instagram.com/sorimadang.vancouver/" target="_blank" rel="noopener noreferrer" class="contact-item">
+                    <svg class="contact-icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 1q-3.195 0-4.59.074a9.3 9.3 0 0 0-2.43.417c-.803.286-1.53.748-2.14 1.35S1.78 4.17 1.49 4.98a9.3 9.3 0 0 0-.417 2.43C1.023 8.344.999 9.87.999 12q0 3.195.074 4.59c.03.825.17 1.64.417 2.43a5.8 5.8 0 0 0 1.35 2.14c.596.6 1.33 1.05 2.14 1.3c.781.28 1.6.437 2.43.466c.933.05 2.46.074 4.59.074q3.195 0 4.59-.074a9.3 9.3 0 0 0 2.43-.417a5.8 5.8 0 0 0 2.14-1.35a5.8 5.8 0 0 0 1.35-2.14c.247-.788.387-1.61.417-2.43c.05-.933.074-2.46.074-4.59s-.016-3.65-.049-4.57a10 10 0 0 0-.442-2.46a5.8 5.8 0 0 0-1.35-2.14a5.8 5.8 0 0 0-2.14-1.35a9.3 9.3 0 0 0-2.43-.417c-.933-.05-2.46-.074-4.59-.074zm-.786 20c-1.31 0-2.32-.016-3.04-.049a10.3 10.3 0 0 1-2.65-.393a3.7 3.7 0 0 1-2.114-2.115a10.3 10.3 0 0 1-.393-2.65c-.033-.72-.05-1.74-.05-3.04v-1.57c0-1.31.017-2.32.05-3.04a9.8 9.8 0 0 1 .393-2.65a3.54 3.54 0 0 1 2.112-2.112a10.3 10.3 0 0 1 2.65-.393c.72-.033 1.74-.05 3.04-.05h1.57c1.31 0 2.32.017 3.04.05a9.8 9.8 0 0 1 2.65.393a3.54 3.54 0 0 1 2.113 2.112c.251.862.383 1.75.393 2.65q.048 1.031.049 3.04v1.57c0 1.31-.017 2.32-.049 3.04c-.016.897-.148 1.79-.393 2.65a3.8 3.8 0 0 1-.835 1.28a3.7 3.7 0 0 1-1.28.835a10 10 0 0 1-2.65.393q-1.03.05-3.04.049h-1.57zm6.68-16.3a1.37 1.37 0 0 0-.967 2.342a1.32 1.32 0 0 0 .968.408a1.24 1.24 0 0 0 .943-.408a1.6 1.6 0 0 0 .432-.967A1.394 1.394 0 0 0 17.894 4.7m-5.89 1.77a5.34 5.34 0 0 0-2.75.741a5.53 5.53 0 0 0-2.01 2.01a5.47 5.47 0 0 0 0 5.5a5.5 5.5 0 0 0 2.01 2.01a5.47 5.47 0 0 0 5.5 0a5.5 5.5 0 0 0 2.01-2.01a5.47 5.47 0 0 0 0-5.5a5.53 5.53 0 0 0-2.01-2.01a5.34 5.34 0 0 0-2.75-.741m0 9.04a3.53 3.53 0 0 1-2.5-1.04a3.54 3.54 0 0 1-1.04-2.5a3.53 3.53 0 0 1 1.04-2.5a3.54 3.54 0 0 1 2.5-1.04a3.53 3.53 0 0 1 2.5 1.04a3.54 3.54 0 0 1 1.04 2.5a3.53 3.53 0 0 1-1.04 2.5a3.54 3.54 0 0 1-2.5 1.04"></path>
+                    </svg>
+                    <span>@sorimadang.vancouver</span>
+                </a>
+                <a href="mailto:sorimadang.vancouver@gmail.com" class="contact-item">
+                    <i data-lucide="mail" class="contact-icon"></i>
+                    <span>sorimadang.vancouver@gmail.com</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
+        <i data-lucide="arrow-up"></i>
+    </button>
+
+    <footer class="reveal-item">
+        <div class="container">
+            <h2 class="ko">소리마당 밴쿠버</h2>
+            <h2 class="en">Sori Madang Vancouver</h2>
+            <p class="quote ko font-accent">함께 듣고, 함께 부르고, 함께 완성하는 소리</p>
+            <p class="quote en font-accent">Listen together. Sing together. Complete the story together.</p>
+            <p class="copyright">&copy; 2026 Kim Song</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Language Toggle Logic
+        const langToggleBtn = document.getElementById('langToggle');
+        const htmlEl = document.documentElement;
+        
+        // Check local storage for language, default to Korean
+        const savedLang = localStorage.getItem('sorimadang-lang') || 'ko';
+        htmlEl.setAttribute('lang', savedLang);
+
+        langToggleBtn.addEventListener('click', () => {
+            const currentLang = htmlEl.getAttribute('lang');
+            const newLang = currentLang === 'ko' ? 'en' : 'ko';
+            htmlEl.setAttribute('lang', newLang);
+            localStorage.setItem('sorimadang-lang', newLang);
+        });
+
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+        
+        // Check local storage for theme, default to dark
+        const savedTheme = localStorage.getItem('sorimadang-theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('sorimadang-theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+                themeToggleBtn.setAttribute('aria-pressed', 'false');
+            } else {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+                themeToggleBtn.setAttribute('aria-pressed', 'true');
+            }
+        }
+
+        // Continuous Staggered Animation System
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -10% 0px', // Trigger slightly before entering viewport fully
+            threshold: 0
+        };
+
+        function revealElement(item, delay, observer) {
+            if (item.tagName.toLowerCase() === 'section') {
+                item.classList.add('visible');
+                observer.unobserve(item);
+                return false;
+            }
+
+            if (item.classList.contains('timeline')) {
+                item.style.transitionDelay = `${delay}ms`;
+                item.classList.add('visible');
+                
+                const timelinePoints = item.querySelectorAll('.timeline-item');
+                timelinePoints.forEach((point, ptIndex) => {
+                    // Much snappier timeline animations
+                    setTimeout(() => {
+                        point.classList.add('visible'); // First reveal point
+                        
+                        // Then fade text
+                        setTimeout(() => {
+                            const contents = point.querySelectorAll('.reveal-timeline-content');
+                            contents.forEach(content => {
+                                content.style.opacity = '1';
+                                content.style.transform = 'translateY(0)';
+                                content.style.transition = 'opacity 0.4s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+                            });
+                        }, 100);
+                    }, delay + 300 + (ptIndex * 150));
+                });
+            } else {
+                item.style.transitionDelay = `${delay}ms`;
+                item.classList.add('visible');
+            }
+
+            observer.unobserve(item);
+            return true;
+        }
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            const currentLang = htmlEl.getAttribute('lang');
+            
+            // Filter and sort newly intersecting items top-to-bottom
+            const intersecting = entries
+                .filter(entry => entry.isIntersecting)
+                .map(entry => entry.target)
+                .filter(item => {
+                    // Ignore elements hidden by language toggle so they don't break the visible sequence
+                    const isHiddenLangElement = 
+                        (item.classList.contains('ko') && currentLang === 'en') || 
+                        (item.classList.contains('en') && currentLang === 'ko');
+                    
+                    if (isHiddenLangElement) {
+                        item.classList.add('visible'); // Ready for when language switches
+                        observer.unobserve(item);
+                        return false;
+                    }
+                    return true;
+                })
+                .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+
+            let batchIndex = 0;
+            
+            intersecting.forEach(item => {
+                const delay = batchIndex * 100;
+                if (revealElement(item, delay, observer)) {
+                    batchIndex++;
+                }
+            });
+        }, observerOptions);
+
+        // Initialize timeline texts to hidden state
+        document.querySelectorAll('.reveal-timeline-content').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(10px)';
+        });
+
+        // Observe sections for divider animation
+        document.querySelectorAll('section').forEach(section => {
+            revealObserver.observe(section);
+        });
+
+        // Observe every reveal-item independently
+        document.querySelectorAll('.reveal-item').forEach(item => {
+            revealObserver.observe(item);
+        });
+        
+        // Fix for bottom-of-page reveal bug during smooth scrolling
+        window.addEventListener('scroll', () => {
+            if (Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50) {
+                const unrevealed = document.querySelectorAll('section:not(.visible), .reveal-item:not(.visible)');
+                let localSequenceIndex = 0;
+                const currentLang = htmlEl.getAttribute('lang');
+                
+                unrevealed.forEach(item => {
+                    const rect = item.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        const isHiddenLangElement = 
+                            (item.classList.contains('ko') && currentLang === 'en') || 
+                            (item.classList.contains('en') && currentLang === 'ko');
+                        
+                        if (isHiddenLangElement) {
+                            item.classList.add('visible');
+                            revealObserver.unobserve(item);
+                            return;
+                        }
+
+                        const delay = localSequenceIndex * 100;
+                        if (revealElement(item, delay, revealObserver)) {
+                            localSequenceIndex++;
+                        }
+                    }
+                });
+            }
+        });
+
+        // Scroll to Top Logic
+        const scrollTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
